@@ -160,14 +160,24 @@ function router(req, res) {
   }
   
   if (method === 'POST') {
-    let body = '';
-    req.on('data', chunk => body += chunk);
+    let rawBody = '';
+    req.on('data', chunk => rawBody += chunk);
     req.on('end', () => {
-      try {
-        handler(req, res, JSON.parse(body), url);
-      } catch (e) {
-        respondJSON(res, { error: 'Body invalid JSON' }, 400);
+      let parsedBody;
+      const contentType = req.headers['content-type'] || '';
+      if (contentType.includes('application/json')) {
+        try { parsedBody = JSON.parse(rawBody); } catch (e) { return respondJSON(res, { error: 'Body invalid JSON' }, 400); }
+      } else if (contentType.includes('application/x-www-form-urlencoded')) {
+        parsedBody = {};
+        const pairs = rawBody.split('&');
+        for (const pair of pairs) {
+          const [key, val] = pair.split('=').map(decodeURIComponent);
+          parsedBody[key] = val;
+        }
+      } else {
+        try { parsedBody = JSON.parse(rawBody); } catch (e) { parsedBody = { raw: rawBody }; }
       }
+      handler(req, res, parsedBody, url);
     });
   } else {
     handler(req, res, null, url);
