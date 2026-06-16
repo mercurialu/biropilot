@@ -65,4 +65,36 @@ const server = http.createServer((req, res) => {
   } else handler(req, res, {});
 });
 
+function genFormHTML(form, missing = false) {
+  const rows = Object.values(form.fields || {}).map(f => 
+    `<tr><td style="padding:8px;border-bottom:1px solid #ddd;color:#475569">${f.label}</td><td style="padding:8px;border-bottom:1px solid #ddd;font-weight:${f.filled?'600':'400'};color:${f.filled?'#1a56db':'#ef4444'}">${f.filled ? (f.value || '') : '<span style="color:#ef4444">LIPSEȘTE</span>'}</td></tr>`
+  ).join('');
+  
+  const acte = (form.acteNecesare || []).map(a => `<li>${a}</li>`).join('');
+  
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${form.nume || 'Document'}</title><style>
+    body{font-family:Arial,sans-serif;max-width:800px;margin:40px auto;padding:20px}
+    h1{color:#1a56db;font-size:1.8em}
+    .header{border-bottom:3px solid #1a56db;padding-bottom:15px;margin-bottom:20px}
+    .info{background:#f0f7ff;padding:15px;border-radius:8px;margin:15px 0}
+    table{width:100%;border-collapse:collapse;margin:20px 0}
+    th{text-align:left;padding:8px;background:#1a56db;color:#fff}
+    .total{font-size:1.3em;font-weight:700;color:#1a56db;text-align:center;padding:15px;background:#f0f7ff;border-radius:8px;margin:15px 0}
+    .missing{background:#fef2f2;border:1px solid #ef4444;padding:15px;border-radius:8px;margin:15px 0}
+    .btn{display:inline-block;padding:12px 30px;background:#1a56db;color:#fff;text-decoration:none;border-radius:8px;margin:20px 0}
+    .btn:hover{background:#0f3a8e}
+    @media print{body{margin:20px}.btn,.noprint{display:none!important}}
+  </style></head><body>
+    <div class=header><h1>${form.nume || 'Formular'}</h1><p style=color:#64748b>${form.institutie || ''} | ${form.bazaLegala || ''}</p></div>
+    ${missing ? `<div class=missing><strong>⚠ Completează-ți Document DNA</strong><p>Unele câmpuri nu au date. Completează profilul pentru un formular complet.</p></div>` : ''}
+    <div class=info><strong>Instituție:</strong> ${form.institutie || '—'}<br><strong>Termen:</strong> ${form.termen || '—'}<br><strong>Perioadă:</strong> ${form.perioada || '—'}</div>
+    ${form.calculated ? `<div class=total>Total calculat: ${Object.values(form.calculated).filter(v => typeof v === 'string').join(' + ')}</div>` : ''}
+    <table><tr><th>Câmp</th><th>Valoare</th></tr>${rows}</table>
+    ${acte ? `<h3>📋 Acte necesare</h3><ul>${acte}</ul>` : ''}
+    <div class=noprint style="text-align:center;margin-top:30px;padding:20px;background:#f8fafc;border-radius:8px">
+      <button class=btn onclick="window.print()">🖨 Tipărește</button>
+      <p style=color:#64748b;margin-top:10px>Generează cu ${form.generatLa ? new Date(form.generatLa).toLocaleDateString('ro-RO') : ''}</p>
+    </div>
+  </body></html>`;
+}
 server.listen(PORT, () => console.log('BiroPilot on port ' + PORT));
