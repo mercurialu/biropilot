@@ -15,6 +15,8 @@ const { SubmissionHub } = require('./modules/submission-hub.js');
 const { CalculatorEngine } = require('./modules/calculator-engine.js');
 
 const { WhatsAppBot } = require('./modules/whatsapp-bot.js');
+const { WhatsAppClient } = require('./modules/whatsapp-client.js');
+const { StripePayments } = require('./modules/stripe-payments.js');
 
 // Inițializare module
 const dna = new DocumentDNA();
@@ -23,6 +25,8 @@ const signer = new DigitalSigner();
 const submitter = new SubmissionHub();
 const calcEngine = new CalculatorEngine();
 const whatsapp = new WhatsAppBot({ dna, pdfGen, signer, submitter, calcEngine });
+const waClient = new WhatsAppClient();
+const stripePay = new StripePayments();
 
 const PORT = process.env.PORT || 3000;
 
