@@ -1,4 +1,4 @@
-const http = require('http');
+﻿const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const { DocumentDNA } = require('./modules/document-dna.js');
@@ -25,7 +25,20 @@ const routes = {
   'GET /api/calculators': (req, res) => respondJSON(res, { calculatoare: calcEngine.listAll() }),
   'GET /api/institutions': (req, res) => respondJSON(res, { institutii: submitter.listInstitutions() }),
   'GET /api/forms': (req, res) => respondJSON(res, { forms: pdfGen.listForms() }),
-  'GET /api/payments/pricing': (req, res) => respondJSON(res, { pricing: stripePay.getPricing() }),
+  'GET /document': (req, res, body, url) => {
+    const u = new URL(url, 'http://localhost');
+    const userId = u.searchParams.get('userId');
+    const formId = u.searchParams.get('formId');
+    if (!userId || !formId) return respondJSON(res, { error: 'userId si formId obligatorii' }, 400);
+    try {
+      const result = pdfGen.generate(userId, formId);
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(genFormHTML(result, !result.complet));
+    } catch (e) {
+      respondJSON(res, { error: e.message }, 400);
+    }
+  },
+
   'POST /api/whatsapp': (req, res, body) => {
     const msg = waClient.parseWebhook(body);
     if (!msg.from || !msg.message) {
@@ -67,7 +80,7 @@ const server = http.createServer((req, res) => {
 
 function genFormHTML(form, missing = false) {
   const rows = Object.values(form.fields || {}).map(f => 
-    `<tr><td style="padding:8px;border-bottom:1px solid #ddd;color:#475569">${f.label}</td><td style="padding:8px;border-bottom:1px solid #ddd;font-weight:${f.filled?'600':'400'};color:${f.filled?'#1a56db':'#ef4444'}">${f.filled ? (f.value || '') : '<span style="color:#ef4444">LIPSEȘTE</span>'}</td></tr>`
+    `<tr><td style="padding:8px;border-bottom:1px solid #ddd;color:#475569">${f.label}</td><td style="padding:8px;border-bottom:1px solid #ddd;font-weight:${f.filled?'600':'400'};color:${f.filled?'#1a56db':'#ef4444'}">${f.filled ? (f.value || '') : '<span style="color:#ef4444">LIPSEÈ˜TE</span>'}</td></tr>`
   ).join('');
   
   const acte = (form.acteNecesare || []).map(a => `<li>${a}</li>`).join('');
@@ -86,14 +99,14 @@ function genFormHTML(form, missing = false) {
     @media print{body{margin:20px}.btn,.noprint{display:none!important}}
   </style></head><body>
     <div class=header><h1>${form.nume || 'Formular'}</h1><p style=color:#64748b>${form.institutie || ''} | ${form.bazaLegala || ''}</p></div>
-    ${missing ? `<div class=missing><strong>⚠ Completează-ți Document DNA</strong><p>Unele câmpuri nu au date. Completează profilul pentru un formular complet.</p></div>` : ''}
-    <div class=info><strong>Instituție:</strong> ${form.institutie || '—'}<br><strong>Termen:</strong> ${form.termen || '—'}<br><strong>Perioadă:</strong> ${form.perioada || '—'}</div>
+    ${missing ? `<div class=missing><strong>âš  CompleteazÄƒ-È›i Document DNA</strong><p>Unele cÃ¢mpuri nu au date. CompleteazÄƒ profilul pentru un formular complet.</p></div>` : ''}
+    <div class=info><strong>InstituÈ›ie:</strong> ${form.institutie || 'â€”'}<br><strong>Termen:</strong> ${form.termen || 'â€”'}<br><strong>PerioadÄƒ:</strong> ${form.perioada || 'â€”'}</div>
     ${form.calculated ? `<div class=total>Total calculat: ${Object.values(form.calculated).filter(v => typeof v === 'string').join(' + ')}</div>` : ''}
-    <table><tr><th>Câmp</th><th>Valoare</th></tr>${rows}</table>
-    ${acte ? `<h3>📋 Acte necesare</h3><ul>${acte}</ul>` : ''}
+    <table><tr><th>CÃ¢mp</th><th>Valoare</th></tr>${rows}</table>
+    ${acte ? `<h3>ðŸ“‹ Acte necesare</h3><ul>${acte}</ul>` : ''}
     <div class=noprint style="text-align:center;margin-top:30px;padding:20px;background:#f8fafc;border-radius:8px">
-      <button class=btn onclick="window.print()">🖨 Tipărește</button>
-      <p style=color:#64748b;margin-top:10px>Generează cu ${form.generatLa ? new Date(form.generatLa).toLocaleDateString('ro-RO') : ''}</p>
+      <button class=btn onclick="window.print()">ðŸ–¨ TipÄƒreÈ™te</button>
+      <p style=color:#64748b;margin-top:10px>GenereazÄƒ cu ${form.generatLa ? new Date(form.generatLa).toLocaleDateString('ro-RO') : ''}</p>
     </div>
   </body></html>`;
 }
