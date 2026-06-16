@@ -1,0 +1,23 @@
+﻿# Render Deployment Config
+# Pune acest fisier in radacina proiectului
+
+services:
+  - type: web
+    name: biropilot-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_VERSION
+        value: 22
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: TWILIO_SID
+        sync: false
+      - key: TWILIO_TOKEN
+        sync: false
+      - key: WHATSAPP_NUMBER
+        sync: false
