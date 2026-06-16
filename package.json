@@ -1,0 +1,10 @@
+{
+  "name": "biropilot",
+  "version": "1.0.0",
+  "description": "Asistent birocratic universal pentru Rmânia",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  }
+}
