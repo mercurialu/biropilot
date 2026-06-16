@@ -1,4 +1,4 @@
-﻿const http = require('http');
+const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const { DocumentDNA } = require('./modules/document-dna.js');
@@ -75,7 +75,7 @@ const server = http.createServer((req, res) => {
       else if (ct.includes('form-urlencoded')) raw.split('&').forEach(p => { const kv = p.split('='); parsed[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || ''); });
       handler(req, res, parsed);
     });
-  } else handler(req, res, {});
+  } else handler(req, res, {}, req.url);
 });
 
 function genFormHTML(form, missing = false) {
