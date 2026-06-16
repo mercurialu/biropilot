@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiroPilot — Asistentul tău birocratic</title>
+  <style>
+    :root {
+      --primary: #1a56db;
+      --primary-dark: #0f3a8e;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white; padding: 60px 0 40px; text-align: center;
+    }
+    header h1 { font-size: 3em; margin-bottom: 10px; }
+    header p { font-size: 1.2em; opacity: 0.9; max-width: 600px; margin: 0 auto 30px; }
+    .cta-button {
+      display: inline-block; background: var(--accent); color: #1a1a1a; padding: 15px 40px;
+      border-radius: 50px; font-size: 1.1em; font-weight: 700; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-button:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(245,158,11,0.4); }
+    .hero-features { display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
+    .hero-features span { font-size: 0.95em; opacity: 0.85; }
+    section { padding: 60px 0; }
+    section h2 { text-align: center; font-size: 2em; margin-bottom: 40px; color: var(--primary); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .card {
+      background: var(--card); border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+    .card h3 { font-size: 1.3em; margin-bottom: 12px; }
+    .card p { color: var(--text-light); margin-bottom: 16px; }
+    .card .icon { font-size: 2.5em; margin-bottom: 16px; }
+    .card .badge {
+      display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600;
+      background: #dbeafe; color: var(--primary);
+    }
+    .card .badge.viral { background: #fef3c7; color: #b45309; }
+    .calculator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .calc-card {
+      background: var(--card); border-radius: 12px; padding: 24px; text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .calc-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+    .calc-card .value { font-size: 1.8em; font-weight: 700; color: var(--primary); margin: 10px 0; }
+    .calc-card .share-btn {
+      display: inline-block; margin-top: 12px; padding: 8px 20px; background: #1877f2; color: white;
+      border: none; border-radius: 8px; font-size: 0.9em; cursor: pointer;
+    }
+    .how-it-works { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+    .step .number {
+      width: 50px; height: 50px; background: var(--primary); color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: 700;
+      margin: 0 auto 16px;
+    }
+    footer {
+      background: var(--primary-dark); color: white; text-align: center; padding: 40px 0;
+    }
+    .whatsapp-float {
+      position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px;
+      background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 2em; color: white; text-decoration: none; box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      z-index: 999;
+    }
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .hero-features { gap: 12px; flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>🦅 BiroPilot</h1>
+    <p>Asistentul tău personal pentru birocrație. Completează, semnează și depune acte la stat — fără să te mai deplasezi.</p>
+    <a href="#" class="cta-button">🤖 Începe pe WhatsApp</a>
+    <div class="hero-features">
+      <span>✅ Formulare complete în 2 minute</span>
+      <span>✅ Semnare digitală automată</span>
+      <span>✅ Depunere online la ANAF, ONRC</span>
+    </div>
+  </div>
+</header>
+
+<section id="calculatoare">
+  <div class="container">
+    <h2>📊 Calculatoare Utile</h2>
+    <p style="text-align:center;color:var(--text-light);margin-bottom:30px">Află rapid cât ai de plătit — și distribuie prietenilor!</p>
+    <div class="calculator-grid" id="calc-container">
+      <div class="calc-card" onclick="alert('Calculez taxele ANAF...')">
+        <div style="font-size:2.5em">💰</div>
+        <h3>Taxe ANAF</h3>
+        <p>Află cât ai de plătit la stat</p>
+        <div class="value" id="taxe-val">—</div>
+        <button class="share-btn">📤 Distribuie</button>
+      </div>
+      <div class="calc-card" onclick="alert('Calculez salariul net...')">
+        <div style="font-size:2.5em">💼</div>
+        <h3>Salariu Net 2026</h3>
+        <p>Din brut în net, instant</p>
+        <div class="value" id="salariu-val">—</div>
+        <button class="share-btn">📤 Distribuie</button>
+      </div>
+      <div class="calc-card" onclick="alert('Calculez rata...')">
+        <div style="font-size:2.5em">🏠</div>
+        <h3>Rata Credit Ipotecar</h3>
+        <p>La ce rată te încadrezi?</p>
+        <div class="value" id="rata-val">—</div>
+        <button class="share-btn">📤 Distribuie</button>
+      </div>
+      <div class="calc-card" onclick="alert('Calculez amenda...')">
+        <div style="font-size:2.5em">🚗</div>
+        <h3>Amendă Circulație</h3>
+        <p>Cât plătești în funcție de clasă</p>
+        <div class="value" id="amenda-val">—</div>
+        <button class="share-btn">📤 Distribuie</button>
+      </div>
+      <div class="calc-card" onclick="alert('Calculez diurna...')">
+        <div style="font-size:2.5em">✈️</div>
+        <h3>Diurnă Deplasare</h3>
+        <p>În România și străinătate</p>
+        <div class="value" id="diurna-val">—</div>
+        <button class="share-btn">📤 Distribuie</button>
+      </div>
+      <div class="calc-card" onclick="alert('Calculez indemnizația...')">
+        <div style="font-size:2.5em">👶</div>
+        <h3>Indemnizație Creștere Copil</h3>
+        <p>Află la ce ai dreptul</p>
+        <div class="value" id="indemnizatie-val">—</div>
+        <button class="share-btn">📤 Distribuie</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: white;">
+  <div class="container">
+    <h2>📋 Formulare Oficiale</h2>
+    <div class="grid" id="forms-container">
+      <div class="card">
+        <div class="icon">📄</div>
+        <h3>Declarația Unică (Formular 200)</h3>
+        <p>Pentru PFA, venituri din drepturi de autor, etc.</p>
+        <span class="badge">ANAF</span>
+      </div>
+      <div class="card">
+        <div class="icon">🏢</div>
+        <h3>Înmatriculare PFA</h3>
+        <p>Cerere completă pentru ONRC</p>
+        <span class="badge">ONRC</span>
+      </div>
+      <div class="card">
+        <div class="icon">🆔</div>
+        <h3>Schimbare Buletin</h3>
+        <p>Cerere precompletată pentru DRPCIV</p>
+        <span class="badge">DRPCIV</span>
+      </div>
+      <div class="card">
+        <div class="icon">🏠</div>
+        <h3>Certificat de Urbanism</h3>
+        <p>Cerere pentru construcție sau extindere</p>
+        <span class="badge">Primărie</span>
+      </div>
+      <div class="card">
+        <div class="icon">🏥</div>
+        <h3>Asigurare Sănătate</h3>
+        <p>Cerere către Casa de Asigurări</p>
+        <span class="badge">CASA SĂNĂTĂȚII</span>
+      </div>
+      <div class="card">
+        <div class="icon">📋</div>
+        <h3>Contract Muncă</h3>
+        <p>Înregistrare Revisal</p>
+        <span class="badge">ITM</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>⚡ Cum Funcționează</h2>
+    <div class="how-it-works">
+      <div class="step">
+        <div class="number">1</div>
+        <h3>Scrii pe WhatsApp</h3>
+        <p>„Vreau să deschid un PFA" sau „Ce acte îmi trebuie pentru buletin?"</p>
+      </div>
+      <div class="step">
+        <div class="number">2</div>
+        <h3>Eu fac treaba</h3>
+        <p>Completez formulare, calculez taxe, generez documentele gata de semnat</p>
+      </div>
+      <div class="step">
+        <div class="number">3</div>
+        <h3>Tu semnezi și depui</h3>
+        <p>Cu certificatul digital, totul e online. Pentru ghișeu, ai instrucțiuni pas cu pas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: linear-gradient(135deg, #1a56db, #0f3a8e); color: white; text-align: center;">
+  <div class="container">
+    <h2 style="color: white;">🚀 Începe Acum</h2>
+    <p style="font-size: 1.2em; margin-bottom: 30px; opacity: 0.95;">
+      Scrie-ne pe WhatsApp și scapă de birocrație pentru totdeauna.
+    </p>
+    <a href="#" class="cta-button">💬 Deschide WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>🦅 BiroPilot — Asistentul tău birocratic</p>
+    <p style="opacity:0.7; margin-top: 8px;">© 2026 BiroPilot. Toate drepturile rezervate.</p>
+  </div>
+</footer>
+
+<a href="#" class="whatsapp-float" title="Scrie-ne pe WhatsApp">💬</a>
+
+</body>
+</html>
