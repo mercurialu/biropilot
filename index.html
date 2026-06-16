@@ -1,238 +1,426 @@
 ﻿<!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BiroPilot — Asistentul tău birocratic</title>
-  <style>
-    :root {
-      --primary: #1a56db;
-      --primary-dark: #0f3a8e;
-      --accent: #f59e0b;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --text-light: #64748b;
-      --success: #10b981;
-      --danger: #ef4444;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white; padding: 60px 0 40px; text-align: center;
-    }
-    header h1 { font-size: 3em; margin-bottom: 10px; }
-    header p { font-size: 1.2em; opacity: 0.9; max-width: 600px; margin: 0 auto 30px; }
-    .cta-button {
-      display: inline-block; background: var(--accent); color: #1a1a1a; padding: 15px 40px;
-      border-radius: 50px; font-size: 1.1em; font-weight: 700; text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .cta-button:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(245,158,11,0.4); }
-    .hero-features { display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
-    .hero-features span { font-size: 0.95em; opacity: 0.85; }
-    section { padding: 60px 0; }
-    section h2 { text-align: center; font-size: 2em; margin-bottom: 40px; color: var(--primary); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-    .card {
-      background: var(--card); border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-    .card h3 { font-size: 1.3em; margin-bottom: 12px; }
-    .card p { color: var(--text-light); margin-bottom: 16px; }
-    .card .icon { font-size: 2.5em; margin-bottom: 16px; }
-    .card .badge {
-      display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600;
-      background: #dbeafe; color: var(--primary);
-    }
-    .card .badge.viral { background: #fef3c7; color: #b45309; }
-    .calculator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .calc-card {
-      background: var(--card); border-radius: 12px; padding: 24px; text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .calc-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-    .calc-card .value { font-size: 1.8em; font-weight: 700; color: var(--primary); margin: 10px 0; }
-    .calc-card .share-btn {
-      display: inline-block; margin-top: 12px; padding: 8px 20px; background: #1877f2; color: white;
-      border: none; border-radius: 8px; font-size: 0.9em; cursor: pointer;
-    }
-    .how-it-works { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
-    .step .number {
-      width: 50px; height: 50px; background: var(--primary); color: white; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: 700;
-      margin: 0 auto 16px;
-    }
-    footer {
-      background: var(--primary-dark); color: white; text-align: center; padding: 40px 0;
-    }
-    .whatsapp-float {
-      position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px;
-      background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 2em; color: white; text-decoration: none; box-shadow: 0 4px 16px rgba(37,211,102,0.4);
-      z-index: 999;
-    }
-    @media (max-width: 768px) {
-      header h1 { font-size: 2em; }
-      .hero-features { gap: 12px; flex-direction: column; align-items: center; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BiroPilot — Asistentul tău birocratic</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f0f4f8;color:#1e293b;line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+header{background:linear-gradient(135deg,#1a56db,#0f3a8e);color:#fff;padding:50px 0 30px;text-align:center}
+header h1{font-size:2.8em;margin-bottom:8px}
+header p{font-size:1.1em;opacity:.9;max-width:600px;margin:0 auto 20px}
+.cta{display:inline-block;background:#f59e0b;color:#1a1a1a;padding:14px 36px;border-radius:50px;font-size:1.05em;font-weight:700;text-decoration:none;transition:.3s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(245,158,11,.4)}
+.hero-feat{display:flex;justify-content:center;gap:30px;margin-top:20px;flex-wrap:wrap;font-size:.9em;opacity:.9}
+section{padding:50px 0}
+section h2{text-align:center;font-size:1.8em;margin-bottom:30px;color:#1a56db}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}
+.calc-card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:.3s}
+.calc-card:hover{box-shadow:0 8px 30px rgba(0,0,0,.12)}
+.calc-card h3{font-size:1.2em;margin-bottom:6px}
+.calc-card .desc{color:#64748b;font-size:.9em;margin-bottom:16px}
+.calc-card .field{margin-bottom:12px}
+.calc-card .field label{display:block;font-size:.85em;font-weight:600;color:#475569;margin-bottom:4px}
+.calc-card .field input,.calc-card .field select{width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:1em;outline:none;transition:.2s}
+.calc-card .field input:focus,.calc-card .field select:focus{border-color:#1a56db}
+.calc-btn{width:100%;padding:12px;background:#1a56db;color:#fff;border:none;border-radius:10px;font-size:1em;font-weight:600;cursor:pointer;transition:.2s}
+.calc-btn:hover{background:#0f3a8e}
+.calc-result{display:none;margin-top:16px;padding:16px;background:#f0f9ff;border-radius:10px;border:1px solid #b9d6f3}
+.calc-result.show{display:block}
+.calc-result .row{display:flex;justify-content:space-between;padding:4px 0;font-size:.95em}
+.calc-result .row .val{font-weight:700;color:#1a56db}
+.calc-result .total{font-size:1.3em;font-weight:700;color:#1a56db;text-align:center;padding:8px 0;border-top:2px solid #b9d6f3;margin-top:6px}
+.share-btn{display:block;width:100%;padding:10px;margin-top:10px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:.9em;font-weight:600;cursor:pointer;transition:.2s}
+.share-btn:hover{background:#1da851}
+.forms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.form-card{background:#fff;border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:.3s}
+.form-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.form-card .icon{font-size:2.5em;margin-bottom:10px}
+.form-card h4{margin-bottom:6px}
+.form-card .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.75em;font-weight:600;background:#dbeafe;color:#1a56db;margin-top:8px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;text-align:center}
+.step .num{width:46px;height:46px;background:#1a56db;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3em;font-weight:700;margin:0 auto 12px}
+.step h4{margin-bottom:8px}
+.step p{color:#64748b;font-size:.9em}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.feature{background:#fff;border-radius:12px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.feature .icon{font-size:2em;margin-bottom:8px}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:900px;margin:0 auto}
+.plan{background:#fff;border-radius:16px;padding:32px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:.3s}
+.plan:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.12)}
+.plan.popular{border:2px solid #f59e0b;position:relative}
+.plan.popular::before{content:"RECOMANDAT";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#f59e0b;color:#1a1a1a;padding:4px 16px;border-radius:20px;font-size:.75em;font-weight:700}
+.plan .price{font-size:2.2em;font-weight:700;color:#1a56db;margin:16px 0}
+.plan .price span{font-size:.4em;color:#64748b;font-weight:400}
+.plan ul{list-style:none;text-align:left;padding:0;margin:16px 0}
+.plan ul li{padding:6px 0;font-size:.9em;color:#475569}
+.plan ul li::before{content:"✅";margin-right:8px}
+.stripe-btn{display:inline-block;padding:12px 30px;background:#635bff;color:#fff;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.2s}
+.stripe-btn:hover{background:#4a42d4}
+footer{background:#0f3a8e;color:#fff;text-align:center;padding:30px 0;font-size:.9em}
+.whatsapp-float{position:fixed;bottom:24px;right:24px;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2em;color:#fff;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,.5);z-index:999;transition:.2s}
+.whatsapp-float:hover{transform:scale(1.1)}
+@media(max-width:768px){header h1{font-size:2em}.calc-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
 <header>
-  <div class="container">
-    <h1>🦅 BiroPilot</h1>
-    <p>Asistentul tău personal pentru birocrație. Completează, semnează și depune acte la stat — fără să te mai deplasezi.</p>
-    <a href="#" class="cta-button">🤖 Începe pe WhatsApp</a>
-    <div class="hero-features">
-      <span>✅ Formulare complete în 2 minute</span>
-      <span>✅ Semnare digitală automată</span>
-      <span>✅ Depunere online la ANAF, ONRC</span>
-    </div>
-  </div>
+<div class=container>
+<h1>🦅 BiroPilot</h1>
+<p>Asistentul tău personal pentru birocrație. Completează formulare, calculează taxe, depune acte la stat — totul de pe WhatsApp.</p>
+<a href="#preturi" class=cta>🚀 Începe acum — 29 lei/lună</a>
+<div class=hero-feat>
+<span>✅ 6 calculatoare utile</span>
+<span>✅ Formulare complete în 2 min</span>
+<span>✅ Semnare digitală</span>
+<span>✅ Depunere ANAF/ONRC</span>
+</div>
+</div>
 </header>
 
-<section id="calculatoare">
-  <div class="container">
-    <h2>📊 Calculatoare Utile</h2>
-    <p style="text-align:center;color:var(--text-light);margin-bottom:30px">Află rapid cât ai de plătit — și distribuie prietenilor!</p>
-    <div class="calculator-grid" id="calc-container">
-      <div class="calc-card" onclick="alert('Calculez taxele ANAF...')">
-        <div style="font-size:2.5em">💰</div>
-        <h3>Taxe ANAF</h3>
-        <p>Află cât ai de plătit la stat</p>
-        <div class="value" id="taxe-val">—</div>
-        <button class="share-btn">📤 Distribuie</button>
-      </div>
-      <div class="calc-card" onclick="alert('Calculez salariul net...')">
-        <div style="font-size:2.5em">💼</div>
-        <h3>Salariu Net 2026</h3>
-        <p>Din brut în net, instant</p>
-        <div class="value" id="salariu-val">—</div>
-        <button class="share-btn">📤 Distribuie</button>
-      </div>
-      <div class="calc-card" onclick="alert('Calculez rata...')">
-        <div style="font-size:2.5em">🏠</div>
-        <h3>Rata Credit Ipotecar</h3>
-        <p>La ce rată te încadrezi?</p>
-        <div class="value" id="rata-val">—</div>
-        <button class="share-btn">📤 Distribuie</button>
-      </div>
-      <div class="calc-card" onclick="alert('Calculez amenda...')">
-        <div style="font-size:2.5em">🚗</div>
-        <h3>Amendă Circulație</h3>
-        <p>Cât plătești în funcție de clasă</p>
-        <div class="value" id="amenda-val">—</div>
-        <button class="share-btn">📤 Distribuie</button>
-      </div>
-      <div class="calc-card" onclick="alert('Calculez diurna...')">
-        <div style="font-size:2.5em">✈️</div>
-        <h3>Diurnă Deplasare</h3>
-        <p>În România și străinătate</p>
-        <div class="value" id="diurna-val">—</div>
-        <button class="share-btn">📤 Distribuie</button>
-      </div>
-      <div class="calc-card" onclick="alert('Calculez indemnizația...')">
-        <div style="font-size:2.5em">👶</div>
-        <h3>Indemnizație Creștere Copil</h3>
-        <p>Află la ce ai dreptul</p>
-        <div class="value" id="indemnizatie-val">—</div>
-        <button class="share-btn">📤 Distribuie</button>
-      </div>
-    </div>
-  </div>
+<section id=calculatoare>
+<div class=container>
+<h2>📊 Calculatoare Utile</h2>
+<p style=text-align:center;color:#64748b;margin-bottom:30px>Completează câmpurile și află instant rezultatul. Distribuie prietenilor!</p>
+<div class=calc-grid id=calcContainer></div>
+</div>
 </section>
 
-<section style="background: white;">
-  <div class="container">
-    <h2>📋 Formulare Oficiale</h2>
-    <div class="grid" id="forms-container">
-      <div class="card">
-        <div class="icon">📄</div>
-        <h3>Declarația Unică (Formular 200)</h3>
-        <p>Pentru PFA, venituri din drepturi de autor, etc.</p>
-        <span class="badge">ANAF</span>
-      </div>
-      <div class="card">
-        <div class="icon">🏢</div>
-        <h3>Înmatriculare PFA</h3>
-        <p>Cerere completă pentru ONRC</p>
-        <span class="badge">ONRC</span>
-      </div>
-      <div class="card">
-        <div class="icon">🆔</div>
-        <h3>Schimbare Buletin</h3>
-        <p>Cerere precompletată pentru DRPCIV</p>
-        <span class="badge">DRPCIV</span>
-      </div>
-      <div class="card">
-        <div class="icon">🏠</div>
-        <h3>Certificat de Urbanism</h3>
-        <p>Cerere pentru construcție sau extindere</p>
-        <span class="badge">Primărie</span>
-      </div>
-      <div class="card">
-        <div class="icon">🏥</div>
-        <h3>Asigurare Sănătate</h3>
-        <p>Cerere către Casa de Asigurări</p>
-        <span class="badge">CASA SĂNĂTĂȚII</span>
-      </div>
-      <div class="card">
-        <div class="icon">📋</div>
-        <h3>Contract Muncă</h3>
-        <p>Înregistrare Revisal</p>
-        <span class="badge">ITM</span>
-      </div>
-    </div>
-  </div>
+<section style=background:#fff id=formulare>
+<div class=container>
+<h2>📋 Formulare Oficiale</h2>
+<div class=forms-grid id=formsContainer></div>
+</div>
 </section>
 
 <section>
-  <div class="container">
-    <h2>⚡ Cum Funcționează</h2>
-    <div class="how-it-works">
-      <div class="step">
-        <div class="number">1</div>
-        <h3>Scrii pe WhatsApp</h3>
-        <p>„Vreau să deschid un PFA" sau „Ce acte îmi trebuie pentru buletin?"</p>
-      </div>
-      <div class="step">
-        <div class="number">2</div>
-        <h3>Eu fac treaba</h3>
-        <p>Completez formulare, calculez taxe, generez documentele gata de semnat</p>
-      </div>
-      <div class="step">
-        <div class="number">3</div>
-        <h3>Tu semnezi și depui</h3>
-        <p>Cu certificatul digital, totul e online. Pentru ghișeu, ai instrucțiuni pas cu pas.</p>
-      </div>
-    </div>
-  </div>
+<div class=container>
+<h2>⚡ Cum Funcționează</h2>
+<div class=steps>
+<div class=step><div class=num>1</div><h4>Scrii pe WhatsApp</h4><p>„Vreau PFA" sau „Ce acte pentru buletin?"</p></div>
+<div class=step><div class=num>2</div><h4>Eu fac treaba</h4><p>Completez formulare, calculez taxe, generez documente</p></div>
+<div class=step><div class=num>3</div><h4>Tu semnezi și depui</h4><p>Cu certificat digital online. La ghișeu, ai instrucțiuni pas cu pas</p></div>
+</div>
+</div>
 </section>
 
-<section style="background: linear-gradient(135deg, #1a56db, #0f3a8e); color: white; text-align: center;">
-  <div class="container">
-    <h2 style="color: white;">🚀 Începe Acum</h2>
-    <p style="font-size: 1.2em; margin-bottom: 30px; opacity: 0.95;">
-      Scrie-ne pe WhatsApp și scapă de birocrație pentru totdeauna.
-    </p>
-    <a href="#" class="cta-button">💬 Deschide WhatsApp</a>
-  </div>
+<section style=background:#fff>
+<div class=container>
+<h2>🎯 Ce poți face cu BiroPilot</h2>
+<div class=features>
+<div class=feature><div class=icon>📄</div><h4>Declarația Unică</h4><p>Completată automat cu datele tale, gata de depus în SPV</p></div>
+<div class=feature><div class=icon>🏢</div><h4>Înmatriculare PFA</h4><p>Cerere ONRC completată + acte necesare + instrucțiuni</p></div>
+<div class=feature><div class=icon>🆔</div><h4>Schimbare Buletin</h4><p>Cerere precompletată + programare DRPCIV automat</p></div>
+<div class=feature><div class=icon>💰</div><h4>Calcul Taxe ANAF</h4><p>Află cât ai de plătit la stat și când e termenul</p></div>
+<div class=feature><div class=icon>🏠</div><h4>Credit Ipotecar</h4><p>Calculează rata la orice bancă, orice sumă</p></div>
+<div class=feature><div class=icon>👶</div><h4>Indemnizație Copil</h4><p>Află la ce ai dreptul și cum să depui actele</p></div>
+</div>
+</div>
+</section>
+
+<section id=preturi style="background:linear-gradient(135deg,#1a56db,#0f3a8e);color:#fff">
+<div class=container>
+<h2 style=color:#fff>💳 Prețuri</h2>
+<div class=pricing-grid>
+<div class=plan>
+<h3>Gratuit</h3>
+<div class=price>0 <span>lei/lună</span></div>
+<ul>
+<li>6 calculatoare utile</li>
+<li>Bot WhatsApp</li>
+<li>Newsletter legi</li>
+<li>Remindere expirări</li>
+</ul>
+<button class=stripe-btn style=background:#64748b disabled>Deja ai gratis</button>
+</div>
+<div class="plan popular">
+<h3>Basic</h3>
+<div class=price>29 <span>lei/lună</span></div>
+<ul>
+<li>Toate calculatoarele</li>
+<li>Bot WhatsApp nelimitat</li>
+<li>Generare formulare (50/lună)</li>
+<li>Document DNA complet</li>
+<li>Instrucțiuni pas cu pas</li>
+</ul>
+<button class=stripe-btn onclick="alert('🔗 Vei fi redirecționat către Stripe pentru plată.\n\nCard de test: 4242 4242 4242 4242\nData: 12/34\nCVV: 123')">Abonează-te</button>
+</div>
+<div class=plan>
+<h3>Pro</h3>
+<div class=price>49 <span>lei/lună</span></div>
+<ul>
+<li>Tot din Basic</li>
+<li>Formulare nelimitate</li>
+<li>Semnare digitală automată</li>
+<li>Depunere SPV ANAF</li>
+<li>Depunere ONRC email</li>
+<li>Suport prioritar</li>
+</ul>
+<button class=stripe-btn onclick="alert('🔗 Vei fi redirecționat către Stripe pentru plată.')">Abonează-te</button>
+</div>
+</div>
+</div>
 </section>
 
 <footer>
-  <div class="container">
-    <p>🦅 BiroPilot — Asistentul tău birocratic</p>
-    <p style="opacity:0.7; margin-top: 8px;">© 2026 BiroPilot. Toate drepturile rezervate.</p>
-  </div>
+<div class=container>
+<p>🦅 BiroPilot — Asistentul tău birocratic</p>
+<p style=opacity:.7;margin-top:8px>© 2026 BiroPilot. Toate drepturile rezervate.</p>
+</div>
 </footer>
 
-<a href="#" class="whatsapp-float" title="Scrie-ne pe WhatsApp">💬</a>
+<a href="https://wa.me/40" class=whatsapp-float target=_blank title="Scrie-ne pe WhatsApp">💬</a>
 
+<script>
+// ============================================================
+// CALCULATOARE FUNCTIONALE
+// ============================================================
+
+const calculators = [
+  {
+    id: "taxeANAF",
+    icon: "💰",
+    title: "Taxe ANAF 2026",
+    desc: "Află cât ai de plătit la stat (CAS + CASS + Impozit)",
+    fields: [
+      { id: "venit", label: "Venit anual estimat (RON)", type: "number", placeholder: "ex: 50000" },
+      { id: "norma", label: "Normă de venit (dacă ești la normă)", type: "number", placeholder: "ex: 25000" }
+    ],
+    calculate: function(vals) {
+      const venit = Math.max(Number(vals.venit) || 0, Number(vals.norma) || 0);
+      const sm = 4050;
+      const cas = Math.max(venit * 0.25, sm * 12 * 0.25);
+      const cass = Math.max(venit * 0.10, sm * 12 * 0.06);
+      const impozit = Math.max(0, (venit - cas) * 0.10);
+      return [
+        { label: "Venit bază", value: venit.toFixed(0) + " RON" },
+        { label: "CAS (25%)", value: Math.round(cas).toLocaleString() + " RON", highlight: true },
+        { label: "CASS (10%)", value: Math.round(cass).toLocaleString() + " RON", highlight: true },
+        { label: "Impozit (10%)", value: Math.round(impozit).toLocaleString() + " RON", highlight: true },
+        { label: "TOTAL de plată", value: Math.round(cas + cass + impozit).toLocaleString() + " RON", total: true },
+        { label: "Salariul minim 2026", value: sm.toLocaleString() + " RON", note: true }
+      ];
+    },
+    share: function(vals) {
+      const venit = Math.max(Number(vals.venit) || 0, Number(vals.norma) || 0);
+      const sm = 4050;
+      const total = Math.round(Math.max(venit * 0.25, sm * 12 * 0.25) + Math.max(venit * 0.10, sm * 12 * 0.06) + Math.max(0, (venit - Math.max(venit * 0.25, sm * 12 * 0.25)) * 0.10));
+      return encodeURIComponent("Eu platesc " + total.toLocaleString() + " RON la ANAF. Tu cat platesti? Calculeaza aici: https://mercurialu.github.io/biropilot/");
+    }
+  },
+  {
+    id: "salariuNet",
+    icon: "💼",
+    title: "Salariu Net 2026",
+    desc: "Calculează salariul net din cel brut",
+    fields: [
+      { id: "brut", label: "Salariu brut (RON)", type: "number", placeholder: "ex: 5000" },
+      { id: "deducere", label: "Deducere personală", type: "select", options: ["0 (niciuna)", "510 (bază)", "710 (1 copil)", "910 (2 copii)", "1110 (3+ copii)"] }
+    ],
+    calculate: function(vals) {
+      const b = Number(vals.brut) || 0;
+      const dedValues = { 0: 0, 1: 510, 2: 710, 3: 910, 4: 1110 };
+      const ded = dedValues[Number(vals.deducere) || 1] || 510;
+      const cas = b * 0.25;
+      const cass = b * 0.10;
+      const bazaImpozit = Math.max(0, b - cas - cass - ded);
+      const impozit = bazaImpozit * 0.10;
+      const net = b - cas - cass - impozit;
+      return [
+        { label: "Salariu brut", value: b.toLocaleString() + " RON" },
+        { label: "CAS (25%)", value: "-" + Math.round(cas).toLocaleString() + " RON", highlight: true },
+        { label: "CASS (10%)", value: "-" + Math.round(cass).toLocaleString() + " RON", highlight: true },
+        { label: "Impozit (10%)", value: "-" + Math.round(impozit).toLocaleString() + " RON", highlight: true },
+        { label: "Deducere", value: ded + " RON", note: true },
+        { label: "SALARIU NET", value: Math.round(net).toLocaleString() + " RON", total: true }
+      ];
+    },
+    share: function(vals) {
+      return encodeURIComponent("Salariul meu net e de ??? RON. Afla si tu cat iei net: https://mercurialu.github.io/biropilot/");
+    }
+  },
+  {
+    id: "ipotecar",
+    icon: "🏠",
+    title: "Credit Ipotecar",
+    desc: "Află rata lunară la un credit ipotecar",
+    fields: [
+      { id: "suma", label: "Suma (RON)", type: "number", placeholder: "ex: 300000" },
+      { id: "dobanda", label: "Dobânda anuală (%)", type: "number", placeholder: "ex: 5.79", value: 5.79 },
+      { id: "ani", label: "Perioada (ani)", type: "number", placeholder: "ex: 30", value: 30 }
+    ],
+    calculate: function(vals) {
+      const suma = Number(vals.suma) || 0;
+      const p = (Number(vals.dobanda) || 5.79) / 100 / 12;
+      const n = (Number(vals.ani) || 30) * 12;
+      const d = Math.pow(1 + p, n);
+      const rata = suma * p * d / (d - 1);
+      return [
+        { label: "Suma împrumutată", value: suma.toLocaleString() + " RON" },
+        { label: "Dobândă anuală", value: (Number(vals.dobanda) || 5.79) + "%" },
+        { label: "Perioadă", value: (Number(vals.ani) || 30) + " ani" },
+        { label: "RATA LUNARĂ", value: Math.round(rata).toLocaleString() + " RON", total: true },
+        { label: "Total plătit", value: Math.round(rata * n).toLocaleString() + " RON" },
+        { label: "Total dobândă", value: Math.round(rata * n - suma).toLocaleString() + " RON", highlight: true }
+      ];
+    },
+    share: function(vals) {
+      return encodeURIComponent("La creditul de " + (Number(vals.suma)||0).toLocaleString() + " RON, rata mea e. Calculeaza si tu: https://mercurialu.github.io/biropilot/");
+    }
+  },
+  {
+    id: "diurna",
+    icon: "✈️",
+    title: "Diurnă Deplasare 2026",
+    desc: "Află diurna pentru deplasări în România și străinătate",
+    fields: [
+      { id: "zile", label: "Număr de zile", type: "number", placeholder: "ex: 5" },
+      { id: "tara", label: "Țara", type: "select", options: ["România", "UE", "Non-UE"] },
+      { id: "functie", label: "Funcția", type: "select", options: ["Bază", "Conducere", "Sector public"] }
+    ],
+    calculate: function(vals) {
+      const zile = Number(vals.zile) || 0;
+      const valori = { "România": [57, 71, 39], "UE": [87, 105, 58], "Non-UE": [97, 120, 65] };
+      const functii = { "Bază": 0, "Conducere": 1, "Sector public": 2 };
+      const t = valori[vals.tara] || valori["România"];
+      const f = functii[vals.functie] || 0;
+      const val = t[f];
+      return [
+        { label: "Zile", value: zile },
+        { label: "Destinație", value: vals.tara || "România" },
+        { label: "Funcție", value: vals.functie || "Bază" },
+        { label: "Diurnă / zi", value: val + " RON" },
+        { label: "TOTAL DIURNĂ", value: (val * zile).toLocaleString() + " RON", total: true }
+      ];
+    },
+    share: function(vals) {
+      return encodeURIComponent("Diurna pentru " + (Number(vals.zile)||0) + " zile e de ??? RON. Verifica si tu: https://mercurialu.github.io/biropilot/");
+    }
+  },
+  {
+    id: "amenda",
+    icon: "🚗",
+    title: "Amendă Circulație 2026",
+    desc: "Calculează valoarea amenzii + reducerea de 50% în 15 zile",
+    fields: [
+      { id: "clasa", label: "Clasa de sancțiune", type: "select", options: ["I (2-3 pct)", "II (4-5 pct)", "III (6-8 pct)", "IV (9-20 pct)", "V (21-100 pct)"] }
+    ],
+    calculate: function(vals) {
+      const pa = 202.5;
+      const clase = { 0: [2, "Oprire neregulamentară"], 1: [4, "Viteză 10-20km/h peste limită"], 2: [6, "Viteză 20-30km/h peste limită"], 3: [9, "Viteză 30-40km/h peste limită"], 4: [21, "Viteză 40km/h+ peste limită"] };
+      const c = clase[Number(vals.clasa) || 0];
+      const valoare = pa * c[0];
+      const reducere = valoare * 0.5;
+      return [
+        { label: "Clasă", value: vals.clasa || "I" },
+        { label: "Motiv", value: c[1] },
+        { label: "Puncte amendă", value: pa.toFixed(1) + " RON" },
+        { label: "Nr. puncte penalizare", value: c[0] },
+        { label: "VALOARE TOTALĂ", value: Math.round(valoare).toLocaleString() + " RON", total: true },
+        { label: "Redus 50% (în 15 zile)", value: Math.round(reducere).toLocaleString() + " RON", highlight: true }
+      ];
+    },
+    share: function(vals) {
+      return encodeURIComponent("Amenda clasa " + (vals.clasa||"I") + " e de ??? RON. Ai grija la volan! Calculeaza: https://mercurialu.github.io/biropilot/");
+    }
+  },
+  {
+    id: "indemnizatie",
+    icon: "👶",
+    title: "Indemnizație Creștere Copil",
+    desc: "Află la ce indemnizație ai dreptul",
+    fields: [
+      { id: "venitMediu", label: "Venit mediu net ultimele 12 luni (RON)", type: "number", placeholder: "ex: 5000" },
+      { id: "optiune", label: "Opțiune", type: "select", options: ["2 ani (85%)", "3 ani (50%)"] }
+    ],
+    calculate: function(vals) {
+      const venit = Number(vals.venitMediu) || 0;
+      const opt = Number(vals.optiune) || 0;
+      const procent = opt === 0 ? 0.85 : 0.50;
+      const perioada = opt === 0 ? "24 luni" : "36 luni";
+      const indemnizatie = Math.min(venit * procent, 12700);
+      const stimulent = 4050 * 0.60;
+      return [
+        { label: "Venit mediu net", value: venit.toLocaleString() + " RON" },
+        { label: "Procent", value: (procent * 100) + "%" },
+        { label: "Perioadă", value: perioada },
+        { label: "Plafon maxim", value: "12.700 RON" },
+        { label: "INDEMNIZAȚIE LUNARĂ", value: Math.round(indemnizatie).toLocaleString() + " RON", total: true },
+        { label: "Stimulent reintrare (60% SM)", value: Math.round(stimulent).toLocaleString() + " RON", highlight: true }
+      ];
+    },
+    share: function(vals) {
+      return encodeURIComponent("Indemnizatia pentru copil e de ??? RON/luna. Verifica si tu: https://mercurialu.github.io/biropilot/");
+    }
+  }
+];
+
+const forms = [
+  { icon: "📄", name: "Declarația Unică 200", inst: "ANAF", desc: "Pentru PFA, drepturi de autor, chirii" },
+  { icon: "🏢", name: "Înmatriculare PFA", inst: "ONRC", desc: "Cerere completă pentru ONRC" },
+  { icon: "🆔", name: "Schimbare Buletin", inst: "DRPCIV", desc: "Cerere precompletată + programare" },
+  { icon: "🏠", name: "Certificat Urbanism", inst: "Primărie", desc: "Pentru construcții și extinderi" },
+  { icon: "🏥", name: "Asigurare Sănătate", inst: "Casa Sănătății", desc: "Cerere pentru asigurare medicală" },
+  { icon: "📋", name: "Contract Muncă", inst: "ITM", desc: "Înregistrare Revisal" }
+];
+
+function renderCalculators() {
+  const container = document.getElementById("calcContainer");
+  container.innerHTML = calculators.map(c => {
+    const fields = c.fields.map(f => {
+      if (f.type === "select") {
+        const opts = f.options.map((o, i) => `<option value="${i}"${i===0?" selected":""}>${o}</option>`).join("");
+        return `<div class=field><label>${f.label}</label><select id="${c.id}_${f.id}">${opts}</select></div>`;
+      }
+      return `<div class=field><label>${f.label}</label><input type="${f.type}" id="${c.id}_${f.id}" placeholder="${f.placeholder||""}" value="${f.value||""}"></div>`;
+    }).join("");
+    return `<div class=calc-card>
+      <div style=font-size:2em>${c.icon}</div>
+      <h3>${c.title}</h3>
+      <p class=desc>${c.desc}</p>
+      ${fields}
+      <button class=calc-btn onclick="calculate('${c.id}')">🔢 Calculează</button>
+      <div class=calc-result id="result_${c.id}"></div>
+    </div>`;
+  }).join("");
+}
+
+function calculate(id) {
+  const c = calculators.find(x => x.id === id);
+  if (!c) return;
+  const vals = {};
+  c.fields.forEach(f => {
+    const el = document.getElementById(id + "_" + f.id);
+    vals[f.id] = el ? el.value : "";
+  });
+  const results = c.calculate(vals);
+  const resDiv = document.getElementById("result_" + id);
+  const rows = results.map(r => {
+    if (r.total) return `<div class=total>${r.label}: ${r.value}</div>`;
+    if (r.note) return `<div class=row style="color:#64748b;font-size:.85em;font-style:italic"><span>${r.label}</span><span>${r.value}</span></div>`;
+    return `<div class=row${r.highlight?' style="font-weight:600;color:#1a56db"':""}><span>${r.label}</span><span class=val>${r.value}</span></div>`;
+  }).join("");
+  const shareLink = c.share ? `https://wa.me/?text=${c.share(vals)}` : "#";
+  resDiv.innerHTML = rows + `<a href="${shareLink}" target=_blank><button class=share-btn>📤 Distribuie pe WhatsApp</button></a>`;
+  resDiv.classList.add("show");
+}
+
+function renderForms() {
+  document.getElementById("formsContainer").innerHTML = forms.map(f =>
+    `<div class=form-card>
+      <div class=icon>${f.icon}</div>
+      <h4>${f.name}</h4>
+      <p style=color:#64748b;font-size:.85em>${f.desc}</p>
+      <div class=badge>${f.inst}</div>
+    </div>`
+  ).join("");
+}
+
+renderCalculators();
+renderForms();
+</script>
 </body>
 </html>
