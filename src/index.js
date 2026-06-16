@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // BIROPILOT - Main Server Entry Point
 // ============================================================
 
@@ -102,10 +102,16 @@ const routes = {
   // WhatsApp
   'POST /api/whatsapp': (req, res, body) => {
     const msg = waClient.parseWebhook(body);
-    if (!msg.from || !msg.message) return respondJSON(res, { error: 'Invalid message' }, 400);
+    if (!msg.from || !msg.message) {
+      res.writeHead(200, { 'Content-Type': 'text/xml' });
+      return res.end('<?xml version="1.0" encoding="UTF-8"?><Response></Response>');
+    }
     const reply = whatsapp.reply(msg.from, msg.message);
-    waClient.send(msg.from, reply);
-    respondJSON(res, { success: true, reply });
+    waClient.send(msg.from, reply).catch(() => {});
+    res.writeHead(200, { 'Content-Type': 'text/xml' });
+    const safeReply = reply.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    res.end('<?xml version="1.0" encoding="UTF-8"?><Response><Message>' + safeReply + '</Message></Response>');
+  },
   },
   // Stripe
   'POST /api/payments/create-checkout': (req, res, body) => {
