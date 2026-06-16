@@ -134,13 +134,30 @@ const routes = {
 
   // === WhatsApp API webhook ===
   'POST /api/whatsapp': (req, res, body) => {
-    const { message, from } = body;
-    if (!message) return respondJSON(res, { error: 'message obligatoriu' }, 400);
-    // TODO: Implement WhatsApp bot logic
-    respondJSON(res, {
-      reply: getBotReply(message, from),
-      from
-    });
+    const msg = waClient.parseWebhook(body);
+    if (!msg.from || !msg.message) {
+      return respondJSON(res, { error: 'Invalid message' }, 400);
+    }
+    const reply = whatsapp.reply(msg.from, msg.message);
+    waClient.send(msg.from, reply);
+    respondJSON(res, { success: true, reply });
+  },
+
+  // === Stripe Payments ===
+  'POST /api/payments/create-checkout': (req, res, body) => {
+    try {
+      const { priceId, userId, successUrl, cancelUrl } = body;
+      if (!priceId || !userId) return respondJSON(res, { error: 'priceId si userId obligatorii' }, 400);
+      stripePay.createCheckoutSession(priceId, userId, successUrl, cancelUrl)
+        .then(session => respondJSON(res, session))
+        .catch(e => respondJSON(res, { error: e.message }, 500));
+    } catch (e) {
+      respondJSON(res, { error: e.message }, 400);
+    }
+  },
+
+  'GET /api/payments/pricing': (req, res) => {
+    respondJSON(res, { pricing: stripePay.getPricing() });
   }
 };
 
@@ -158,72 +175,16 @@ function respondJSON(res, data, statusCode = 200) {
   res.end(JSON.stringify(data, null, 2));
 }
 
-function getBotReply(message, from) {
-  const msg = message.toLowerCase().trim();
-
-  if (msg.includes('salut') || msg.includes('buna') || msg.includes('hey')) {
-    return 'Salut! Eu sunt BiroPilot, asistentul tau birocratic. Pot sa te ajut cu acte, formulare, taxe si proceduri. Scrie-mi ce ai nevoie!';
-  }
-  if (msg.includes('ajutor') || msg.includes('ce poti')) {
-    return 'Pot sa:\n📋 Completez formulare oficiale (ANAF, ONRC, Primarie)\n💰 Calculez taxe, salarii, rate\n📄 Pregatesc documente pentru orice procedura\n🏛 Iti dau instructiuni pas cu pas\n\nExemple: "vreau sa deschid un PFA" / "calculeaza-mi taxele" / "ce acte imi trebuie pentru buletin"';
-  }
-  if (msg.includes('pfa') || msg.includes('deschid')) {
-    return 'Pentru deschiderea unui PFA ai nevoie de:\n1. Cerere inmatriculare ONRC (o completez eu)\n2. Copie CI\n3. Cazier fiscal\n4. Dovada sediu\n5. 45 RON taxa ONRC\n\nVrei sa completez cererea acum? Dami datele tale si o generez in 2 minute.';
-  }
-  if (msg.includes('buletin') || msg.includes('ci ') || msg.includes('carte de identitate')) {
-    return 'Pentru schimbarea buletinului:\n📅 Fa programare pe drpciv.ro\n💰 Taxa: 6 RON\n📄 Acte: buletin vechi, certificat nastere, dovada taxa\n⏱ Durata: 2-5 zile\n\nVrei sa generez cererea precompletata?';
-  }
-  if (msg.includes('anaf') || msg.includes('taxe') || msg.includes('declaratie')) {
-    return 'Completez declaratia unica (Formular 200) pentru ANAF. Am nevoie de venitul tau estimat si realizat. Pot sa o depun direct in SPV daca ai cont configurat.';
-  }
-  return 'Scrie-mi ce ai nevoie si te ajut cu:\n• Proceduri birocratice\n• Formulare complete\n• Calcul taxe si salarii\n• Instructiuni pas cu pas\n\nExemple: "vreau PFA", "ce acte pentru buletin?", "calculeaza-mi salariul net"';
-}
-
 // ============================================================
-// ROUTER
+// STRIPE PAYMENTS
 // ============================================================
 
-function router(req, res) {
-  const { method, url } = req;
-  const routeKey = `${method} ${url.split('?')[0]}`;
-
-  // CORS preflight
-  if (method === 'OPTIONS') {
-    res.writeHead(204, {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
-    });
-    return res.end();
-  }
-
-  const handler = routes[routeKey];
-  if (!handler) {
-    // Fișiere statice
-    if (url === '/' || url === '/index.html') {
-      serveStatic(res, 'public/index.html', 'text/html');
-      return;
-    }
-    if (url.startsWith('/public/')) {
-      const filePath = path.join(__dirname, '..', url);
-      serveStatic(res, filePath);
-      return;
-    }
-    return respondJSON(res, { error: 'Ruta nu exista' }, 404);
-  }
-
-  if (method === 'POST') {
-    let body = '';
-    req.on('data', chunk => body += chunk);
-    req.on('end', () => {
-      try {
-        handler(req, res, JSON.parse(body), url);
-      } catch (e) {
-        respondJSON(res, { error: 'Body invalid JSON' }, 400);
-      }
-    });
-  } else {
-    handler(req, res, null, url);
+async function createCheckoutSession(priceId, userId) {
+  try {
+    const session = await stripePay.createCheckoutSession(priceId, userId);
+    return session;
+  } catch (e) {
+    return { error: e.message };
   }
 }
 
@@ -258,6 +219,8 @@ server.listen(PORT, () => {
   console.log('   GET  /api/institutions/instructions');
   console.log('   GET  /api/signing/status');
   console.log('   POST /api/whatsapp');
+  console.log('   POST /api/payments/create-checkout');
+  console.log('   GET  /api/payments/pricing');
 });
 
 
